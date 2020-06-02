@@ -1,21 +1,20 @@
-const files = require('./files');
+const files = require('./files')
 const https = require('https');
 
 const content = files.read('bins.txt');
 
 const binRegex = /\b\d{6}\b/gm
-
-const cards = [];
 const bins = content.match(binRegex);
-for(bin in bins) {
+
+bins.forEach(bin => {
     const options = {
-        host: 'https://lookup.binlist.net',
+        host: 'lookup.binlist.net',
         path: `/${bin}`,
         method: 'GET',
         headers: { 'Accept-Version': '3' }, 
     }
 
-    const req = https.get(`https://lookup.binlist.net/${bin}`, resp => {
+    const req = https.get(options, resp => {
         let data = ''
 
         resp.on('data', chunk => {
@@ -23,12 +22,16 @@ for(bin in bins) {
         })
 
         resp.on('end', () => {
-            const card = JSON.parse(data))
-            cards.push({bin, type: card.type, issuer: card.brand })
+            const card = JSON.parse(data)
+            const text = generateCompleteBin(bin, card)
+            files.write('bin.txt', text)
         })
+        
     }).on('error', err => console.log(`Error: ${err.message}`))
     
     req.end();
-}
+})
 
-console.log(cards)
+
+const generateCompleteBin = (bin, card) =>
+    `bin:"${bin}" - type: ${card.type} - issuer: ${card.brand}`;

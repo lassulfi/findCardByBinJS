@@ -1,15 +1,17 @@
-const fs = require('fs');
+const fs = require('fs')
 
 const read = filename => 
-    fs.readFileSync(`${__dirname}/originais/${filename}`, { encoding: 'utf-8' });
+    fs.readFileSync(`${__dirname}/originais/${filename}`, { encoding: 'utf-8' })
 
 const write = (filename, content) => {
-    const dirname = `${__dirname}/alterados`;
+    const dirname = `${__dirname}/modificados`
     if (!fs.existsSync(dirname)) {
-        fs.mkdir(dirname);
+        fs.mkdirSync(dirname)
     }
 
-    fs.writeFileSync(`${dirname}/${filename}`, content, { encoding: 'utf-8' });
+    const stream = fs.createWriteStream(`${dirname}/${filename}`, { encoding: "utf-8", flags: 'a' })
+    stream.write(`${content}\n`)
+    stream.close();
 }
 
 module.exports = { read, write }

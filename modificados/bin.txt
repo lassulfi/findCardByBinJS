@@ -1,0 +1,6 @@
+bin:"457173" - type: debit - issuer: Traditional
+bin:"457173" - type: debit - issuer: Traditional
+bin:"457173" - type: debit - issuer: Traditional
+bin:"457173" - type: debit - issuer: Traditional
+bin:"457173" - type: debit - issuer: Traditional
+bin:"457173" - type: debit - issuer: Traditional
