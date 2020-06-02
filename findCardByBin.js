@@ -23,8 +23,8 @@ for(bin in bins) {
         })
 
         resp.on('end', () => {
-            console.log(JSON.parse(data))
-            cards.push({bin, type: data.type, issuer: data.brand })
+            const card = JSON.parse(data))
+            cards.push({bin, type: card.type, issuer: card.brand })
         })
     }).on('error', err => console.log(`Error: ${err.message}`))
     
